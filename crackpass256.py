@@ -10,14 +10,14 @@ from pwn import *
 import sys
 
 # Input validation for command-line arguments
-if len(sys.argv) != 2: #FIXME: change this to reflect updated password_bank argument
+if len(sys.argv) != 3: #FIXME: testing needed
     print("Invalid argument.")
-    print(">> {} <sha256sum>".format(sys.argv[0]))
+    print(">> {} <sha256sum> </path/to/wordlist.txt>".format(sys.argv[0]))
     exit()
 
 # initializations and declarations
 target_hash = sys.argv[1]
-password_bank = "rockyou.txt" #FIXME: turn this into sys.argv[2]
+password_bank = sys.argv[2] #FIXME: testing needed
 attempts = 0
 
 # loop for hash cracking
@@ -33,7 +33,7 @@ with log.progress("Attempting to crack: {}\n".format(target_hash)) as p:
             p.status("[{}] {} == {}".format(attempts, password.decode('latin-1'), password_hash))
             
             if password_hash == target_hash:
-                p.success("Password hash found after {} attempts, '{}' hashes to <{}>.".format(attempts, password.decode('latin-1'), password_hash))
+                p.success("Matching hash found after {} attempts! '{}' hashes to <{}>.".format(attempts, password.decode('latin-1'), password_hash))
                 exit()
             attempts += 1
         p.failure("Password hash not found.")
