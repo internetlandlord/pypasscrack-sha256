@@ -9,23 +9,23 @@ from hashlib import sha256
 from pwn import *
 import sys
 
-# Input validation for command-line arguments
-if len(sys.argv) != 3: #FIXME: testing needed
+# ---------- Input validation for command-line arguments
+if len(sys.argv) != 3:
     print("Invalid argument.")
     print(">> {} <sha256sum> </path/to/wordlist.txt>".format(sys.argv[0]))
     exit()
 
-# initializations and declarations
+# ---------- initializations and declarations
 target_hash = sys.argv[1]
-password_bank = sys.argv[2] #FIXME: testing needed
+password_bank = sys.argv[2]
 attempts = 0
 
-# loop for hash cracking
+# ---------- Hash cracking process loop
 with log.progress("Attempting to crack: {}\n".format(target_hash)) as p:
     with open(password_bank, "r", encoding='latin-1') as password_list:
         for password in password_list:
             
-            # remove newlines as they contaminate hash digest calculations
+            # remove newlines from listed passwords to prevent digest contamination:
             password = password.strip("\n").encode('latin-1')
             password_hash = sha256sumhex(password)
             
