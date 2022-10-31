@@ -3,6 +3,7 @@
 # ---------- Python SHA-256 Password Cracker
 # Takes two arguments from the command line, the hash digest
 # and a path to a wordlist for comparing hashes against it.
+#FIXME: Works for SHA-256, 64 rounds - what is the built-in sha256sum consist of?
 
 # ---------- Imported Modules
 from hashlib import sha256
@@ -15,7 +16,7 @@ if len(sys.argv) != 3:
     print(">> {} <sha256sum> </path/to/wordlist.txt>".format(sys.argv[0]))
     exit()
 
-# ---------- initializations and declarations
+# ---------- Initializations and declarations
 target_hash = sys.argv[1]
 password_bank = sys.argv[2]
 attempts = 0
